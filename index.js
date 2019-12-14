@@ -1,12 +1,20 @@
 const timeedit = require('./api/timeedit');
 const canvas = require('./api/canvas');
 
-// const path = 'courses/8176/calendar_events/timetable';
-const path = 'calendar_events?context_codes[]=group_54297&start_date=2019-11-24&end_date=2020-01-05&per_page=50';
+timeedit.get().then((response) => {
+  console.log(response.data.reservations[0]);
+});
 
+// canvas.post('calendar_events', {
+//   calendar_event: {
+//     context_code: "group_54297",
+//     title: "HEJ",
+//     start_at: "2019-12-14T22:00:00Z",
+//     end_at: "2019-12-14T23:00:00Z",
+//   }
+// })
+//   .then((response) => {
+//     console.log(response);
+//   })
+//   .catch(error => console.log(error));
 
-canvas.get(path)
-  .then((response) => {
-    console.log(response);
-  })
-  .catch(error => console.log(error.response.data));
