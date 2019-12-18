@@ -1,10 +1,14 @@
 module.exports = function(reservation, context_code) {
-  return calendar_event = {
+  let start_at = reservation.startdate + 'T' + reservation.starttime + 'Z';
+  let end_at = reservation.enddate + 'T' + reservation.endtime + 'Z';
+
+  return {
     context_code,
-    title: reservation.columns[3],
-    location_name: reservation.columns[1],
-    description: reservation.columns[7],
-    start_at: reservation.startdate + 'T' + reservation.starttime + 'Z',
-    end_at: reservation.enddate + 'T' + reservation.endtime + 'Z',
+    title: reservation.title,
+    location_name: reservation.location_name,
+    location_address: reservation.location_address,
+    description: reservation.description,
+    start_at,
+    end_at,
   }
 }

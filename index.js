@@ -1,19 +1,28 @@
-const timeedit = require('./api/timeedit');
-const canvas = require('./api/canvas');
-const createCalendarEvent = require('./constructors/calendarEvent');
+const Koa = require('koa');
+
+// used to parse body repsonses from API
+const bodyParser = require('koa-bodyparser');
+const cors = require('koa2-cors');
+
+const calendar = require('./routes/calendar.js');
+
+// creates an instance of the API
+const app = new Koa();
+
+// uses bodyParser-lib to construct bodys for returning data
+app.use(bodyParser());
+
+// Enable CORS 
+app.use(cors({
+  origin: 'http://localhost:8080',
+  credentials: true,
+  allowMethods: ['GET', 'PATCH', 'POST'],
+  allowHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+}));
 
 
-const context_code = 'group_54297';
+app.listen(3000);
 
-timeedit.get().then((response) => {
-  response.data.reservations.forEach((item) => {
-    const calendar_event = createCalendarEvent(item, context_code);
-    canvas.post('calendar_events', {
-      calendar_event
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch(error => console.log(error));
-  });
-});
+app.use(calendar.routes());
+
+
