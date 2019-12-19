@@ -6,9 +6,6 @@ const canvas = require('../api/canvas');
 async function postEvents(ctx) {
   const reservations = ctx.request.body.postData;
 
-  let reservation = reservations[0];
-  let calendarEvent = createCalendarEvent(reservation, 'group_54297');
-
   reservations.forEach((reservation) => {
     let calendarEvent = createCalendarEvent(reservation, 'group_54297')
     canvas.post('calendar_events',calendarEvent)
@@ -24,9 +21,9 @@ async function postEvent(ctx) {
 
   let calendarEvent = createCalendarEvent(reservation, 'group_54297');
 
-  canvas.post('calendar_events', calendarEvent)
+  canvas.post('calendar_events', {calendarEvent})
     .then((response) => {
-      console.log(response.response.data);
+      console.log(response);
     })
     .catch(error => console.log(error.response.data));
 }
